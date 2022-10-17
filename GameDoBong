@@ -1,0 +1,46 @@
+from tkinter import *
+import time
+import random
+
+
+class Ball:
+    def __init__(seft, canvas, color):
+        seft.canvas = canvas
+        seft.id = canvas.create_oval(10, 10, 25, 25, fill=color)
+        seft.canvas.move(seft.id, 100, 200)
+        start = [-3, -2, -1, 1, 2, 3]
+        random.shuffle(start)
+        seft.x = 0;
+        seft.y = 1;
+        seft.canvas_height = 500;
+        seft.canvas_width = 400;
+
+    def draw(seft):
+        seft.canvas.move(seft.id, seft.x, seft.y)
+        pos = seft.canvas.coords(seft.id)
+        if pos[1] <= 0:
+            seft.y = 3
+        if pos[3] > seft.canvas_height:
+            seft.y = -3
+        if pos[0] <= 0:
+            seft.x = 3;
+        if pos[2] >= seft.canvas_width:
+            seft.x = -3;
+
+
+tk = Tk()
+tk.title("Game Do Bong")
+tk.resizable(0, 0)
+can = Canvas(tk, width=400, height=500)
+can.pack()
+
+bong = Ball(can, "red")
+
+start = [-3, -2, -1, 1, 2, 3]
+random.shuffle(start)
+
+while 1:
+    bong.draw()
+    tk.update_idletasks()
+    tk.update()
+    time.sleep(0.01)
